@@ -1,0 +1,11 @@
+{
+"plugins": [
+    "security"
+  ],
+  "extends": [
+    "plugin:security/recommended"
+  ],
+  "rules": {
+    "security/detect-unsafe-regex": "warn"
+  }
+}

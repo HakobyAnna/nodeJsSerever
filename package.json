@@ -1,0 +1,42 @@
+{
+  "name": "jimployserver",
+  "version": "1.0.0",
+  "description": "Nodejs jimploy Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/rgeworkan/jimployserver.git"
+  },
+  "author": "Romeo Geworkan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/rgeworkan/jimployserver/issues"
+  },
+  "homepage": "https://gitlab.com/rgeworkan/jimployserver#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "expess": "0.0.1-security",
+    "express": "^4.16.4",
+    "express-jwt": "^5.3.3",
+    "express-rate-limit": "^3.3.2",
+    "file-system": "^2.2.2",
+    "https": "^1.0.0",
+    "i18next": "^19.8.4",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.11.13",
+    "mongoose-timestamp": "^0.6.0",
+    "nodemailer": "^5.1.1",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "redis": "^2.8.0"
+  },
+  "devDependencies": {
+    "eslint-plugin-security": "^1.4.0",
+    "nodemon": "^1.18.9"
+  }
+}
