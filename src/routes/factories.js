@@ -66,7 +66,7 @@ module.exports = server => {
             try {
                 // find the factory and update it with given body
                 const factory = await Factory.findOneAndUpdate({_id: req.params.id}, req.body );
-                res.sendStatus(200);
+                res.json(factory);
             } catch(err) {
                 res.sendStatus(404);
             }
@@ -84,7 +84,7 @@ module.exports = server => {
                     res.sendStatus(404);
                 } else {
                  const factory = await Factory.findOneAndRemove({_id: req.params.id});
-                 res.sendStatus(200);
+                 res.sendStatus(204);
                 }
             });
         } catch(err) {

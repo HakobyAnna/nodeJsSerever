@@ -6,35 +6,105 @@ info:
 servers:
   - url: 'http://localhost:5000'
 paths:
-  /api/factories:
+  /api/factories/id:
     get:
-      description: Get all the factories
+      description: Get a factory by id
+      parameters:        
+        - name: id          
+          in: path           
+          description: Id of the factory          
+          required: true       
+          schema:             
+            $ref: '#/components/schemas/factoryId'
       responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/factoryItem'
+        '400':
+          description: Bad request
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/errorModelList'
+        '401':
+          description: Unauthorized
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/errorModelList'
         '500':
           description: Internal Server Error
           content:
             application/json; charset=utf-8:
               schema:
-                $ref: '#/components/schemas/factories'
-                servers:
-                - url: 'http://localhost:5000'
-                paths:
-                /api/factories/:id:
-                  get:
-                    description: Get a single factory
-                    responses:
-                      '404':
-                        description: Error
-                        content:
-                          application/json; charset=utf-8:
-                            schema:
-                              $ref: '#/components/schemas/factories/'
-                      '500':
-                        description: Internal Server Error
-                        content:
-                          application/json; charset=utf-8:
-                            schema:
-                              $ref: '#/components/schemas/factories/'
+                $ref: '#/components/schemas/errorModelList'
+    delete:
+      description: Delete factory by id
+      parameters:        
+        - name: id          
+          in: path           
+          description: Id of the factory          
+          required: true       
+          schema:             
+            $ref: '#/components/schemas/factoryId'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad request
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/errorModelList'
+        '401':
+          description: Unauthorized
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/errorModelList'
+        '404':
+          description: Not Found
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/errorModelList'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/errorModelList'
+  /api/factories:
+    get:
+        description: Get all the factories
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json; charset=utf-8:
+                schema:
+                  $ref: '#/components/schemas/factories'
+          '400':
+            description: Bad request
+            content:
+              application/json; charset=utf-8:
+                schema:
+                  $ref: '#/components/schemas/errorModelList'
+          '401':
+            description: Unauthorized
+            content:
+              application/json; charset=utf-8:
+                schema:
+                  $ref: '#/components/schemas/errorModelList'
+          '500':
+            description: Internal Server Error
+            content:
+              application/json; charset=utf-8:
+                schema:
+                  $ref: '#/components/schemas/errorModelList'
     put: 
       description: Make changes in a factory
       responses:
@@ -43,55 +113,65 @@ paths:
           content:
             application/json; charset=utf-8:
               schema:
-                $ref: '#/components/schemas/factories/'
-        '404':
-          description: Internal Server Error
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/factories/'
+                $ref: '#/components/schemas/factoryItem'
         '400':
           description: Bad request
           content:
             application/json; charset=utf-8:
               schema:
-                $ref: '#/components/schemas/factories/'
-    description: Post a new factory
+                $ref: '#/components/schemas/errorModelList'
+        '401':
+          description: Unauthorized
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/errorModelList'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/errorModelList'
     post:
       description: Post a new factory
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                employers:
-                  type: array
-                  items:
-                    type: string
-                product:
-                  type: array
-                  items:
-                    type: string
-                director:
-                  type: string
-                name:
-                  type: string
-            examples:
-              '0':
-                value: " {\r\n      \"name\" : \"ABC\",\r\n      \"director\" : \"Ani\", \r\n      \"employers\" : [\"Anna\", \"Elya\"],\r\n      \"product\" : [\"pen\", \"textbook\"]\r\n }"
+              $ref: '#/components/schemas/factoryItem'
+        required: true
       responses:
         '201':
           description: Created
           content:
             text/plain; charset=utf-8:
               schema:
-                type: string
-              examples: {}
-      servers:
-        - url: 'http://localhost:5000'
+                $ref: '#/components/schemas/factoryItem'
+        '400':
+          description: Bad request
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/errorModelList'
+        '401':
+          description: Unauthorized
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/errorModelList'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/errorModelList'
 components:
   schemas:
+    factoryId:
+      title: Factory id
+      description:  This is Id of the factory
+      type: string
+      example: '60167ca9d2f4825fa4aea4d8'
     factories:
       title: Factories
       description: Array of factories
@@ -124,3 +204,24 @@ components:
         - director
         - employers
         - product
+    errorModelList:
+      title: List Error Model
+      description: Common defintion for a list of errors. To be used as body in combination with the HTTP status code.
+      type: object
+      properties:
+        errors:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/errorModel'
+    errorModel:
+      title: Error Model
+      description: Common defintion of an error. To be used as body in combination with the HTTP status code.
+      type: object
+      properties:
+        code:
+          type: string
+        property:
+          type: string
+        message:
+          type: string
