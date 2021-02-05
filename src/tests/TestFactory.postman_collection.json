@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "efb0a1f1-4571-4204-be7d-1b6c211a168d",
+		"name": "TestFactory",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/factories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"factories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddOneFactory",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"ABc\",\r\n  \"director\": \"Aram\",\r\n  \"employers\": [\"Lora\", \"Mike\"],\r\n  \"product\": [\"phone\", \"printer\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/factories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"factories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ChangeOneFactory",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"ANN\",\r\n  \"director\": \"Vardan\",\r\n  \"employers\": [\"Lora\", \"Mike\"],\r\n  \"product\": [\"phone\", \"printer\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/factories/6014596c5ca35667b494249e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"factories",
+						"6014596c5ca35667b494249e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/factories/6014596c5ca35667b494249e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"factories",
+						"6014596c5ca35667b494249e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteOneFactory",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/factories/6014596c5ca35667b494249e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"factories",
+						"6014596c5ca35667b494249e"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,126 @@
+openapi: 3.0.1
+info:
+  title: Factories Api
+  description: Documentation of factories Api
+  version: '0.1'
+servers:
+  - url: 'http://localhost:5000'
+paths:
+  /api/factories:
+    get:
+      description: Get all the factories
+      responses:
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/factories'
+                servers:
+                - url: 'http://localhost:5000'
+                paths:
+                /api/factories/:id:
+                  get:
+                    description: Get a single factory
+                    responses:
+                      '404':
+                        description: Error
+                        content:
+                          application/json; charset=utf-8:
+                            schema:
+                              $ref: '#/components/schemas/factories/'
+                      '500':
+                        description: Internal Server Error
+                        content:
+                          application/json; charset=utf-8:
+                            schema:
+                              $ref: '#/components/schemas/factories/'
+    put: 
+      description: Make changes in a factory
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/factories/'
+        '404':
+          description: Internal Server Error
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/factories/'
+        '400':
+          description: Bad request
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/factories/'
+    description: Post a new factory
+    post:
+      description: Post a new factory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employers:
+                  type: array
+                  items:
+                    type: string
+                product:
+                  type: array
+                  items:
+                    type: string
+                director:
+                  type: string
+                name:
+                  type: string
+            examples:
+              '0':
+                value: " {\r\n      \"name\" : \"ABC\",\r\n      \"director\" : \"Ani\", \r\n      \"employers\" : [\"Anna\", \"Elya\"],\r\n      \"product\" : [\"pen\", \"textbook\"]\r\n }"
+      responses:
+        '201':
+          description: Created
+          content:
+            text/plain; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: 'http://localhost:5000'
+components:
+  schemas:
+    factories:
+      title: Factories
+      description: Array of factories
+      type: array
+      items:
+        $ref: '#/components/schemas/factoryItem'
+    factoryItem:
+      title: Factory item
+      description: Object for factory
+      type: object
+      properties:
+        name:
+          description: Name of the factory
+          type: string
+          example: ABC
+        director:
+          description: Name of the factory director
+          type: string
+          example: Anna
+        employers:
+          description: Array of the factory employers
+          type: array
+          example: ['Elya', 'Anna']
+        product:
+          description: Array of the factory product
+          type: array
+          example: ['TV', 'PC', 'Printer']
+      required:
+        - name
+        - director
+        - employers
+        - product
