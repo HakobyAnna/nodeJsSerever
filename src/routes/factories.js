@@ -38,6 +38,7 @@ module.exports = server => {
 
     // add factory
     server.post('/api/factories', async (req, res) => {
+        console.log(req.body);
         if(req.is('application/json')){
             // do something
             const { name, director, employers, product } = req.body;
@@ -52,11 +53,15 @@ module.exports = server => {
             // save factories
             try {
                 const newFactory = await factory.save();
-                res.sendStatus(201);
+                res.sendStatus(201).json(newFactory);
             } catch(err) {
                 console.log(err);
-                res.sendStatus(400);
+                res.sendStatus(500);
             }
+        } else {
+            res.status(400).json({
+                message: 'You can only use JSON',
+            });
         }
     });
 
@@ -65,10 +70,14 @@ module.exports = server => {
         if(req.is('application/json')){
             try {
                 // find the factory and update it with given body
-                const factory = await Factory.findOneAndUpdate({_id: req.params.id}, req.body );
-                res.json(factory);
+                const factory = await Factory.findOneAndUpdate({_id: req.params.id}, req.body, (err) => {
+                    if(err){
+                        res.sendStatus(404);
+                    }
+                } );
+                res.status(200).json(factory);
             } catch(err) {
-                res.sendStatus(404);
+                res.sendStatus(500);
             }
         } else {
             res.sendStatus(400);
