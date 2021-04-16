@@ -53,17 +53,18 @@ module.exports = server => {
             // save factories
             try {
                 const newFactory = await factory.save();
-                res.sendStatus(201).json(newFactory);
+                return res.status(201).json(newFactory);
             } catch(err) {
                 console.log(err);
                 res.sendStatus(500);
             }
-        } else {
+        } 
+        else {
             res.status(400).json({
                 message: 'You can only use JSON',
             });
         }
-    });
+    })
 
     // update factory
     server.put('/api/factories/:id', async (req, res) => {
@@ -93,7 +94,7 @@ module.exports = server => {
                     res.sendStatus(404);
                 } else {
                  const factory = await Factory.findOneAndRemove({_id: req.params.id});
-                 res.sendStatus(204);
+                 res.sendStatus(200);
                 }
             });
         } catch(err) {

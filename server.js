@@ -5,16 +5,29 @@ const bodyParser = require('body-parser');
 const https = require('https');
 const fs = require('fs');
 var rateLimit = require('express-rate-limit');
-
+var cors = require('cors');
 const Factory = require('./src/models/Factory');
 
 
 // user docker?
 var rjwt = require('express-jwt');
 
+var whitelist = ['http://localhost:3000/'];
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      //callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
+
 const server = express();
 
-const mongodb_url =  'mongodb+srv://TestDB:Ot4Dh7QuOQXO1aGt@cluster0.akkij.mongodb.net/TestDB?retryWrites=true&w=majority';
+server.use(cors());
+
+const mongodb_url =  'mongodb+srv://TestDB:gxMVM9jysGtmIbWs@cluster0.akkij.mongodb.net/TestDB?retryWrites=true&w=majority';
 //mongodb+srv://TestDB:<password>@cluster0.akkij.mongodb.net/<dbname>?retryWrites=true&w=majority
 const port = 5000;
 const port_https = 443;
@@ -135,15 +148,15 @@ server.use(bodyParser.json());
 // Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YzM4ZjdjZDVlNDMyMzA2Y2NjNzY3MTMiLCJ1c2VySWQiOiJhZG1pbjIxIiwiZW1haWwiOiJhZG1pbjFAYWRtaW4uY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkS3ZqOHdWYVNGTlVkdmZCa01GdmtYTzQ0aHZqZWZRV2pQbjVRYjhFT0ZiOU96eEZFMW5IT1ciLCJ1cGRhdGVkQXQiOiIyMDE5LTAxLTExVDIwOjA4OjQ1Ljg3OVoiLCJjcmVhdGVkQXQiOiIyMDE5LTAxLTExVDIwOjA4OjQ1Ljg3OVoiLCJfX3YiOjAsImlhdCI6MTU0NzI0MjYyN30.-Odftt28G4TxFHXsk-5t8t474geHoAm6RjdPJv92oTo
 //server.use(rjwt({ secret: config.JWT_SECRET }).unless({ path: ['/api/auth', 'api/signupUser']} ));
 
-//const httpsOptions = {
+// const httpsOptions = {
 //  key: fs.readFileSync('ssl/server.key'),
 //  cert: fs.readFileSync('ssl/server.crt')
-//};  
+// };  
 
-//https.createServer(httpsOptions, server)
+// https.createServer(httpsOptions, server)
 //  .listen(port_https, function ( ) {
 //    console.log(`Server running on port ${port_https}` );
-//});
+// });
 
 server.listen(port, () => { 
   mongoose.set('useFindAndModify', false);
